@@ -22,15 +22,14 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     GameGrid grid;
     GameLogic gameLogic;
+    private View.OnClickListener oclBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initVars();
-
-        View.OnClickListener oclBtn = new View.OnClickListener() {
+        oclBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
@@ -70,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         };
+        initVars();
+        draw();
     }
 
     private void restart() {
@@ -79,15 +80,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void initVars() {
         b00 = (Button) findViewById(R.id.b00);
+        b00.setOnClickListener(oclBtn);
         b10 = (Button) findViewById(R.id.b10);
+        b10.setOnClickListener(oclBtn);
         b20 = (Button) findViewById(R.id.b20);
+        b20.setOnClickListener(oclBtn);
         b01 = (Button) findViewById(R.id.b01);
+        b01.setOnClickListener(oclBtn);
         b11 = (Button) findViewById(R.id.b11);
+        b11.setOnClickListener(oclBtn);
         b21 = (Button) findViewById(R.id.b21);
+        b21.setOnClickListener(oclBtn);
         b02 = (Button) findViewById(R.id.b02);
+        b02.setOnClickListener(oclBtn);
         b12 = (Button) findViewById(R.id.b12);
+        b12.setOnClickListener(oclBtn);
         b22 = (Button) findViewById(R.id.b22);
+        b22.setOnClickListener(oclBtn);
         button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(oclBtn);
         textView = (TextView) findViewById(R.id.textView);
         grid = new GameGrid();
         gameLogic = new GameLogic(grid);
@@ -112,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void drawButton(Button b, int x, int y) {
-        b.setText(grid.getContent(x, y));
-        if (grid.isWon(x, y)) b.setBackgroundColor(Color.RED);
+        if(grid.getContent(x, y) == 'e') b.setText("");
+        else b.setText(String.valueOf(grid.getContent(x, y)));
+        //if (gameLogic.isWon(x, y)) b.setBackgroundColor(Color.RED);
     }
 }

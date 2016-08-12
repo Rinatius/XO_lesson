@@ -1,5 +1,8 @@
 package kg.kloop.rinat.myapplication;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * Этот класс хранит информацию о состоянии игры "XO",
  * в частности состояние поля, чей ход, и все послания
@@ -12,29 +15,32 @@ public class GameGrid {
      * назначает ход крестикам.
      */
     public GameGrid(){
-
+        gridArray = new char[3][3];
+        reset();
     }
 
     /**
      * Возвращает содержимое клетки в массиве.
      * @param x координата по оси x, min - 0, max - 2
      * @param y координата по оси y, min - 0, max - 2
-     * @return значение из массива: x, y, X, Y, e.
+     * @return значение из массива: x, o, X, O, e.
      * Большие буквы для выигрышной комбинации.
      * e для пустых клеток.
      */
     public char getContent(int x, int y) {
-        return 'x';
+        return gridArray[x][y];
     }
 
     /**
-     * Проверка клетки на то, что она находится выигрышной строке.
+     * Записывет содержимое клетки в массиве.
      * @param x координата по оси x, min - 0, max - 2
-     * @param y координата по оси y, min - 0, max - 2
-     * @return Возвращает true, если клетка находится по выигрышной строке.
+     * @param y координата по оси н, min - 0, max - 2
+     * @param symbol значение из массива: x, o, X, O, e.
+     * Большие буквы для выигрышной комбинации.
+     * e для пустых клеток.
      */
-    public boolean isWon(int x, int y) {
-        return false;
+    public void setContent(int x, int y, char symbol){
+        gridArray[x][y] = symbol;
     }
 
     /**
@@ -45,9 +51,35 @@ public class GameGrid {
         return message;
     }
 
-    char[][] gridArray;
-    char turn;
-    String message;
+    public void setMessage(String message){
+        this.message = message;
+    }
+
+
+    public void reset() {
+        Arrays.fill(gridArray[0], 'e');
+        Arrays.fill(gridArray[1], 'e');
+        Arrays.fill(gridArray[2], 'e');
+        turn = 'x';
+        message = "";
+    }
+
+    public char getTurn() {
+        return turn;
+    }
+
+    public void setTurn(char turn) {
+        this.turn = turn;
+    }
+
+    public char[][] getArray() {
+        return gridArray;
+    }
+
+    private char[][] gridArray;
+    private char turn;
+    private String message;
+
 
 
 }
